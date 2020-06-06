@@ -1,0 +1,27 @@
+{% extends '../layout.njk' %}
+
+{% block content %}
+
+<div class="page-content">
+  <div class="recipes-page-title">
+    <h2>Gerenciar receitas</h2>
+  </div>
+  <div class="recipes-cards">
+      {% for recipe in recipes %}
+        <div class="recipe-card">
+          <div
+            class="image"
+            style="background-image: url({{recipe.img if recipe.img else '//placehold.it/500x360'}})"
+          >
+          </div>
+          <div class="recipe-card-content">
+            <p class="recipe-card-title">{{ recipe.title }}</p>
+            <p class="recipes-page-chef">por {{ recipe.chef_name }}</p>
+            <a href="/admin/recipes/{{ recipe.id }}">Visualizar</a>
+          </div>
+        </div>
+      {% endfor %}
+  </div>
+</div>
+
+{% endblock %}

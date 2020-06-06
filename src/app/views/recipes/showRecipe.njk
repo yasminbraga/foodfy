@@ -1,0 +1,79 @@
+{% extends "../layout.njk" %}
+
+{% block content %}
+<div class="recipe-show-container">
+  <div class="recipe-header">
+    <p>Receita: {{ recipe.title }}</p>
+    <a class="button" href="/admin/recipes/{{ recipe.id }}/edit">Editar receita</a>
+  </div>
+
+   <div class="gallery">
+    <div class="highlight">
+      {% if not recipeFiles %}
+        <img src="http://placehold.it/500x500?text=PRODUTO SEM FOTO">
+      {% else %}
+        <img 
+          src="{{recipeFiles[0].src}}" 
+          alt="{{recipeFiles[0].name}}"
+          onclick="Lightbox.open()"
+        >
+      {% endif %}
+
+      <div class="lightbox-target">
+        <img 
+          src="{{recipeFiles[0].src}}"
+          alt="{{recipeFiles[0].name}}"
+        >
+        <a 
+          href="#"
+          class="lightbox-close"
+          onclick="Lightbox.close()"
+        >
+          <i class="material-icons">close</i>
+        </a>
+      </div>
+
+
+    </div>
+    <div class="gallery-preview">
+      {% for file in recipeFiles %}
+        <img 
+          src="{{file.src}}" 
+          alt="{{image.name}}"
+          {% if loop.index0 == 0 %}
+            class='active'
+          {%endif%}
+          onclick="ImageGallery.setImage(event)"
+        >
+      {%endfor%}
+    </div>
+   </div>
+
+  <div class="recipe-info-content">
+    <div class="recipe-content-title">
+      <h1>{{ recipe.title }}</h1>
+      <p>por {{ chef.name }}</p>
+    </div>
+    <div class="recipe-content">
+      <h2>Ingredientes</h2>
+      <ul>
+        {% for ingredient in recipe.ingredients %}
+          <li>{{ ingredient }}</li>
+        {% endfor %}
+      </ul>
+
+      <h2>Modo de preparo</h2>
+      <ul>
+        {% for stage in recipe.preparation %}
+          <li>{{ stage }}</li>
+        {% endfor %}
+      </ul>
+      
+      <h2>Informações adicionais</h2>
+      <p>{{ recipe.information }}</p>
+    </div>
+  </div>
+  
+</div>
+
+{% endblock %}
