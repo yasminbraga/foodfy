@@ -27,8 +27,23 @@ module.exports = {
     }
 
     // pegar as receitas do chefe
-    // pegar a imagem de cada receita
-    return res.render('chefs/showChef', {chef, chefAvatar})
+    results = await Chef.findChefRecipes(chef.id)
+    let recipes = results.rows
+
+    async function getImage(recipeId) {
+      let results = await File.files(recipeId)
+      const recipeFiles = results.rows.map(recipeFile => `${req.protocol}://${req.headers.host}${recipeFile.path.replace("public", "")}`)
+      return recipeFiles[0]
+    }
+
+    const recipesPromise = recipes.map(async recipe => {
+      recipe.img = await getImage(recipe.id)
+      return recipe
+    })
+
+    recipes = await Promise.all(recipesPromise)
+
+    return res.render('chefs/showChef', {chef, chefAvatar, recipes})
   },
   async post(req, res) {
     const keys = Object.keys(req.body)
