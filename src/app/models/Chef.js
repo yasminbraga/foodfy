@@ -41,7 +41,17 @@ module.exports = {
   },
   findChef(chefId) {
     return db.query(`
-      SELECT * FROM chefs WHERE id = $1
+    SELECT chefs.*, count(recipes) AS total_recipes
+    FROM chefs
+    LEFT JOIN recipes ON (chefs.id = recipes.chef_id)
+    WHERE chefs.id = $1
+    GROUP BY chefs.id;
+    `, [chefId])
+  },
+  findChefRecipes(chefId) {
+    return db.query(`
+      SELECT * FROM recipes
+      WHERE recipes.chef_id = $1
     `, [chefId])
   },
   delete(chefId) {

@@ -26,6 +26,8 @@ module.exports = {
       src: `${req.protocol}://${req.headers.host}${chefAvatar.path.replace("public", "")}`
     }
 
+    // pegar as receitas do chefe
+    // pegar a imagem de cada receita
     return res.render('chefs/showChef', {chef, chefAvatar})
   },
   async post(req, res) {
