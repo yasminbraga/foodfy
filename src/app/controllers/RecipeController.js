@@ -22,7 +22,6 @@ module.exports = {
     })
 
     const recipes = await Promise.all(recipesPromise)
-    console.log(recipes)
 
     return res.render('recipes/index', {recipes})
   },

@@ -1,5 +1,7 @@
+// HIGHLIGHT LINKS
 const currentPage = location.pathname
 const menuItems = document.querySelectorAll('header .site-links a')
+const adminLinks = document.querySelectorAll('header .links a')
 
 for (item of menuItems) {
     if (currentPage.includes(item.getAttribute('href'))) {
@@ -7,6 +9,13 @@ for (item of menuItems) {
     }
 }
 
+for (item of adminLinks) {
+  if (currentPage.includes(item.getAttribute('href'))) {
+      item.classList.add('active')
+  }
+}
+
+// ADD FIELD FORM
 function addIngredient() {
     const ingredients = document.querySelector("#ingredients")
     const fieldContainer = document.querySelectorAll(".ingredient")
@@ -43,7 +52,7 @@ const addPreparationField = document.querySelector(".add-preparation")
     }
 
 
-
+// PAGINATION
 function paginate(selectedPage, totalPages) {
 
     let pages = [],
@@ -97,7 +106,7 @@ if(pagination) {
     createPagination(pagination)
 }
 
-
+// PHOTOS UPLOAD
 const PhotosUpload = {
   input: "",
   preview: document.querySelector('#photos-preview'),
@@ -202,6 +211,7 @@ const PhotosUpload = {
 
 }
 
+// AVATAR UPLOAD
 const AvatarUpload = {
   input: "",
   uploadLimit: 1,
@@ -304,7 +314,6 @@ const AvatarUpload = {
     photosDiv.remove()
   }
 }
-
 
 // GALERIA DE IMAGENS
 const ImageGallery = {

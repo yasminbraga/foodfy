@@ -45,11 +45,15 @@ header.navigation {
 }
 
 .links a {
-  color: #ffffff;
+  color: #999999;
   font-size: 15px;
   font-weight: bold;
   text-decoration: none;
   margin-right: 25px;
+}
+
+.links a.active {
+  color: #ffffff;
 }
 
 footer {
@@ -519,6 +523,9 @@ header.site-navigation {
 .chef-info p {
   font-size: 20px;
   color: #777777;
+}
+.chef-recipes h2 {
+  margin-bottom: 30px;
 }
 /* INDEX RECIPE PAGE ADMIN */
 .recipes-page-title {

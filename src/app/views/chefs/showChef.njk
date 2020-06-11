@@ -14,24 +14,23 @@
   </div>
 
   <div class="chef-recipes">
-  <h2>Receitas</h2>
-  <div class="recipes-cards">
-      {% for recipe in recipes %}
-        <div class="recipe-card">
-          <div
-            class="image"
-            style="background-image: url({{recipe.img if recipe.img else '//placehold.it/500x360'}})"
-          >
+    <h2>Receitas</h2>
+    <div class="recipes-cards">
+        {% for recipe in recipes %}
+          <div class="recipe-card">
+            <div
+              class="image"
+              style="background-image: url({{recipe.img if recipe.img else '//placehold.it/500x360'}})"
+            >
+            </div>
+            <div class="recipe-card-content">
+              <p class="recipe-card-title">{{ recipe.title }}</p>
+              <p class="recipes-page-chef">por {{ chef.name }}</p>
+              <a href="/admin/recipes/{{ recipe.id }}">Visualizar</a>
+            </div>
           </div>
-          <div class="recipe-card-content">
-            <p class="recipe-card-title">{{ recipe.title }}</p>
-            <p class="recipes-page-chef">por {{ chef.name }}</p>
-            <a href="/admin/recipes/{{ recipe.id }}">Visualizar</a>
-          </div>
-        </div>
-      {% endfor %}
-  </div>
-  
+        {% endfor %}
+    </div>
   </div>
 </div>
 
