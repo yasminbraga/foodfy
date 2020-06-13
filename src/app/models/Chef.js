@@ -4,7 +4,10 @@ const {date} = require('../../lib/utils')
 module.exports = {
   all() {
     return db.query(`
-    SELECT * FROM chefs
+    SELECT chefs.*, count(recipes) AS total_recipes
+    FROM chefs
+    LEFT JOIN recipes ON (chefs.id = recipes.chef_id)
+    GROUP BY chefs.id;
     `)
   },
   create({name, file_id}) {

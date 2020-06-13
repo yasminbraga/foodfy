@@ -527,6 +527,35 @@ header.site-navigation {
 .chef-recipes h2 {
   margin-bottom: 30px;
 }
+
+/* INDEX CHEF PAGE ADMIN */
+.chefs-page-title h2 {
+  margin-bottom: 30px;
+}
+.chefs-card {
+  display: grid;
+  grid-template-columns: repeat(4);
+  grid-gap: 30px;
+}
+.chef-card {
+  display: flex;
+}
+.chef-card img {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 20px;
+}
+.chef-card-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.chef-card .chef-card-content p {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
 /* INDEX RECIPE PAGE ADMIN */
 .recipes-page-title {
   padding-bottom: 30px;
@@ -548,6 +577,7 @@ header.site-navigation {
   margin-right: 20px;
   width: 172px;
 }
+.chef-card-content a,
 .recipe-card-content a {
   text-decoration: none;
   font-weight: bold;

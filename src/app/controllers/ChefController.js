@@ -6,7 +6,22 @@ module.exports = {
 
     let results = await Chef.all()
 
-    return res.render('chefs/index')
+    async function getAvatar(fileId) {
+      let results = await File.findChefAvatar(fileId)
+      let chefAvatar = results.rows[0]
+
+      chefAvatar = `${req.protocol}://${req.headers.host}${chefAvatar.path.replace("public", "")}`
+      
+      return chefAvatar
+    }
+
+    const chefsAvatarPromise = results.rows.map(async chef => {
+      chef.img = await getAvatar(chef.file_id)
+      return chef
+    })
+
+    const chefs = await Promise.all(chefsAvatarPromise)
+    return res.render('chefs/index', {chefs})
   },
   create(req, res) {
     return res.render('chefs/create')
