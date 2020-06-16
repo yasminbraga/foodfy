@@ -203,6 +203,21 @@ section.site-cards .site-card img {
   font-size: 14px;
   color: #777777;
 }
+
+/* SITE - CHEFS PAGE */
+.site-chef-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.site-chef-content .chef-name {
+  font-size: 18px;
+  margin-bottom: 5px;
+}
+.site-chef-content .chef-total-recipes {
+  font-size: 14px;
+  color: #666666;
+}
 /* ADMIN FORM */
 .recipe-show-container,
 .form  {
