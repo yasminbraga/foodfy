@@ -1,17 +1,23 @@
 // HIGHLIGHT LINKS
-const currentPage = location.pathname
+
+let currentPage = location.pathname
 const menuItems = document.querySelectorAll('header .site-links a')
 const adminLinks = document.querySelectorAll('header .links a')
 
-for (item of menuItems) {
+if (menuItems) {
+  for (item of menuItems) {
     if (currentPage.includes(item.getAttribute('href'))) {
-        item.classList.add('active')
-    }
-}
-
-for (item of adminLinks) {
-  if (currentPage.includes(item.getAttribute('href'))) {
       item.classList.add('active')
+    }
+  }
+} 
+
+if (adminLinks) {
+
+  for (item of adminLinks) {
+    if (currentPage.includes(item.getAttribute('href'))) {
+      item.classList.add('active')
+    }
   }
 }
 

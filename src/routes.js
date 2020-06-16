@@ -4,14 +4,16 @@ const multer = require('./app/middlewares/multer')
 
 const RecipeController = require('./app/controllers/RecipeController')
 const ChefController = require('./app/controllers/ChefController')
+const SiteController = require('./app/controllers/SiteController')
+
 
 // SITE
-routes.get('/', function(req, res) {
-    return res.render('site/index')
-})
+routes.get('/', SiteController.index)
 routes.get('/about', function(req, res) {
     return res.render('site/about')
 })
+routes.get('/recipes', SiteController.showRecipes)
+routes.get('/chefs', SiteController.showChefs)
 
 // ADMIN RECIPES
 routes.get('/admin/recipes/create', RecipeController.create)

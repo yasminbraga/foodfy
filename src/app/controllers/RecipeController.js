@@ -7,7 +7,6 @@ module.exports = {
 
     let results = await Recipe.all()
     
-
     async function getImage(recipeId) {
       let results = await File.files(recipeId)
       const recipeFiles = results.rows.map(recipeFile => `${req.protocol}://${req.headers.host}${recipeFile.path.replace("public", "")}`)
@@ -15,7 +14,6 @@ module.exports = {
       return recipeFiles[0]
     }
 
-    
     const recipesPromise = results.rows.map(async recipe => {
       recipe.img = await getImage(recipe.id)
       return recipe

@@ -16,12 +16,10 @@
     <section class="site-cards">
     {% for recipe in recipes %}
         <div class="site-card" id={{recipes.indexOf(recipe)}}>
-            <div class="site-card-image-container">
-                <img src="{{ recipe.image }}" alt="Imagem de {{ recipe.image }}">
-            </div>
+            <img src="{{ recipe.img }}" alt="Imagem de {{ recipe.title }}">
             <div class="site-content">
-                <p class="site-content-title">{{recipe.title}}</p>
-                <p class="site-content-author">por {{recipe.chef_name}}</p>
+                <p class="site-recipe-title">{{recipe.title}}</p>
+                <p class="site-recipe-chef">por {{recipe.chef_name}}</p>
             </div>
         </div>
     {% endfor %}

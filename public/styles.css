@@ -184,7 +184,26 @@ header.site-navigation {
   font-weight: bold;
   padding: 50px 0 20px;
 }
-/* FORM */
+section.site-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 20px;
+}
+section.site-cards .site-card img {
+  width: 300px;
+  height: 140px;
+  border-radius: 15px;
+}
+
+.site-content .site-recipe-title {
+  font-size: 18px;
+  padding: 20px 0 5px;
+}
+.site-content .site-recipe-chef {
+  font-size: 14px;
+  color: #777777;
+}
+/* ADMIN FORM */
 .recipe-show-container,
 .form  {
   width: 940px;
@@ -202,7 +221,7 @@ header.site-navigation {
   font-weight: bold;
 }
 
-/* FIELDS */
+/* ADMIN FIELDS */
 .item:first-child p {
   padding: 26px 0 10px;
 }
@@ -291,7 +310,7 @@ header.site-navigation {
   margin-bottom: 10px;
 }
 
-/* PHOTOS UPLOAD */
+/* ADMIN PHOTOS UPLOAD */
 .item .photos {
   display: flex;
 }
@@ -369,7 +388,7 @@ header.site-navigation {
   opacity: 1;
 }
 
-/* SHOW RECIPE PAGE */
+/* ADMIN SHOW RECIPE PAGE */
 .recipe-header {
   margin-bottom: 20px;
 }
@@ -477,7 +496,7 @@ header.site-navigation {
   transition: 400ms;
 
 }
-/* chef create */
+/* ADMIN - CHEF CREATE*/
 .item-avatar #avatar-preview {
   width: 150px;
   height: 150px;
@@ -493,7 +512,7 @@ header.site-navigation {
   object-fit: cover;
 }
 
-/* CHEF SHOW PAGE */
+/* ADMIN - CHEF SHOW PAGE */
 .chef-header {
   display: flex;
   justify-content: space-between;
