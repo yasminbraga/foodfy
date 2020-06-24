@@ -5,6 +5,8 @@ const multer = require('./app/middlewares/multer')
 const RecipeController = require('./app/controllers/RecipeController')
 const ChefController = require('./app/controllers/ChefController')
 const SiteController = require('./app/controllers/SiteController')
+const SearchController = require('./app/controllers/SearchController')
+
 
 
 // SITE
@@ -14,6 +16,9 @@ routes.get('/about', function(req, res) {
 })
 routes.get('/recipes', SiteController.showRecipes)
 routes.get('/chefs', SiteController.showChefs)
+
+// SEARCH
+routes.get('/recipes/search', SearchController.index)
 
 // ADMIN RECIPES
 routes.get('/admin/recipes/create', RecipeController.create)

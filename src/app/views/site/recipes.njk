@@ -1,5 +1,9 @@
 {% extends './layout.njk' %}
 
+{% import '../parts/section-recipes.njk' as section %}
+
 {% block content %}
-<p>recipes</p>
+<div class="page-content">
+  {{section.recipes('', '', recipes)}}
+</div>
 {% endblock %}

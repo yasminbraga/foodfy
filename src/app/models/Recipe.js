@@ -65,6 +65,24 @@ module.exports = {
     return db.query(`
       DELETE FROM recipes WHERE id = $1
     `, [id])
-  }
+  },
+  search(params) {
+    const {filter} = params
+
+    let query = "",
+        filterQuery = `
+          WHERE recipes.title ilike '%${filter}%'
+        `
+    query = `
+      SELECT recipes.*, chefs.name AS chef_name
+      FROM recipes
+      LEFT JOIN chefs ON (recipes.chef_id = chefs.id)
+      ${filterQuery}
+      ORDER BY recipes.created_at DESC
+    `
+    return db.query(query)
+    
+    
+      }
 
 }

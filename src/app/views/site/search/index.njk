@@ -1,0 +1,14 @@
+{% extends '../layout.njk' %}
+
+{% import 'parts/section-recipes.njk' as section %}
+
+{% block content %}
+<div class="page-content search-recipe">
+  <div class="header-search">
+    <h2>Buscando por "{{search.term}}"</h2>
+  </div>
+
+  {{section.recipes('','',recipes)}}
+  
+</div>
+{% endblock %}

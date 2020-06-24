@@ -22,8 +22,24 @@ module.exports = {
 
     return res.render('site/index', {recipes})
   },
-  showRecipes(req, res) {
-    return res.render('site/recipes')
+  async showRecipes(req, res) {
+    let results = await Recipe.all()
+    
+    async function getImage(recipeId) {
+      let results = await File.files(recipeId)
+      const recipeFiles = results.rows.map(recipeFile => `${req.protocol}://${req.headers.host}${recipeFile.path.replace("public", "")}`)
+
+      return recipeFiles[0]
+    }
+
+    const recipesPromise = results.rows.map(async recipe => {
+      recipe.img = await getImage(recipe.id)
+      return recipe
+    }).filter((recipe, index) => index > 3 ? false : true)
+
+    const recipes = await Promise.all(recipesPromise)
+
+    return res.render('site/recipes', {recipes})
   },
   async showChefs(req, res) {
     let results = await Chef.all()

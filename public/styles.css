@@ -101,6 +101,7 @@ header.site-navigation {
   margin: 0 auto;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 20px;
 }
 
 .site-links a {
@@ -626,3 +627,7 @@ section.site-cards .site-card img {
   padding: 5px 0 10px;
 }
 
+/* SEARCH */
+.header-search {
+  margin-bottom: 20px;
+}
