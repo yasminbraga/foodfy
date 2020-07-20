@@ -22,6 +22,11 @@ module.exports = {
 
     return res.render('site/index', {recipes})
   },
+  
+  about(req, res) {
+    return res.render('site/about')
+  },
+
   async showRecipes(req, res) {
     let results = await Recipe.all()
     

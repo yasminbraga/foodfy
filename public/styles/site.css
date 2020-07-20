@@ -1,0 +1,126 @@
+/* SITE LAYOUT */
+header.site-navigation {
+  display: flex;
+  height: 80px;
+  width: 940px;
+  margin: 0 auto;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.site-links a {
+  font-size: 16px;
+  text-decoration: none;
+  margin-right: 30px;
+  color: #111111;
+}
+.site-links a.active {
+  font-weight: bold;
+}
+.site-filter button {
+  background-color: #6558C3;
+  color: white;
+  width: 91px;
+  height: 37px;
+  font-weight: bold;
+  font-size: 16px;
+  border-radius: 4px;
+}
+.site-filter input {
+  border: 1px solid #DDDDDD;
+  border-radius: 4px;
+  padding: 10px 15px;
+}
+.site-filter form {
+  display: grid;
+  grid-template-columns: 246px 1fr;
+  grid-column-gap: 8px;
+}
+
+/* ABOUT PAGE - SITE */
+.page-content,
+.body-content {
+  width: 940px;
+  margin: 0 auto;
+  padding-bottom: 10px;
+}
+.about-title {
+  font-size: 24px;
+  color: #111111;
+  font-weight: bold;
+  padding: 20px 0 30px;
+}
+.text-content {
+  font-size: 18px;
+  color: #444444;
+  line-height: 28px;
+}
+.complement {
+  font-size: 20px;
+  font-weight: bold;
+  padding: 30px 0 20px;
+}
+
+/* INDEX PAGE - SITE */
+.site-description {
+  display: flex;
+  background-color: #FBDFDB;
+  border-radius: 30px;
+  padding: 0 100px 0 60px;
+  justify-content: space-between;
+}
+.site-description img {
+  margin-top: 66px;
+}
+.description {
+  max-width: 316px;
+  margin: 117px 0;
+}
+.description h1 {
+  margin-bottom: 10px;
+}
+.description p {
+  font-size: 18px;
+  color: #000000;
+  opacity: 0.7;
+}
+.site-card-title {
+  font-size: 24px;
+  font-weight: bold;
+  padding: 50px 0 20px;
+}
+section.site-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 20px;
+}
+section.site-cards .site-card img {
+  width: 300px;
+  height: 140px;
+  border-radius: 15px;
+}
+
+.site-content .site-recipe-title {
+  font-size: 18px;
+  padding: 20px 0 5px;
+}
+.site-content .site-recipe-chef {
+  font-size: 14px;
+  color: #777777;
+}
+
+/* SITE - CHEFS PAGE */
+.site-chef-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.site-chef-content .chef-name {
+  font-size: 18px;
+  margin-bottom: 5px;
+}
+.site-chef-content .chef-total-recipes {
+  font-size: 14px;
+  color: #666666;
+}

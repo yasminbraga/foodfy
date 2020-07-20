@@ -1,0 +1,33 @@
+.itens-users {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 40px;
+}
+
+.item.user-item p {
+  padding: 26px 0 10px;
+}
+/* .error input {
+  border: 1px solid #FF3131;
+} */
+.user-item .user-checkbox {
+  display: flex;
+  align-items: center;
+}
+.user-item .user-checkbox input {
+  margin-right: 8px;
+  border: 1px solid #DDDDDD;
+}
+
+.user-item .user-checkbox p {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+/* validate errors */
+.item .error {
+  background-color: #DC4747;
+  padding: 4px;
+  color: white;
+  border-radius: 4px;
+}

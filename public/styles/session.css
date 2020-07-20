@@ -1,0 +1,29 @@
+header.session-navigation {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 35px;
+}
+
+section.login.form {
+  width: 500px;
+  padding: 150px 0;
+}
+
+.login-header {
+  display: flex;
+  justify-content: center;
+}
+
+.login-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 35px;
+}
+
+.login-footer a {
+  text-decoration: none;
+  font-size: 16px;
+  color: #969696;
+}

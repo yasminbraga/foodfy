@@ -1,0 +1,36 @@
+<div class="itens-users">
+  <div class="item user-item">
+    <p>Nome</p>
+    <div>
+      <input type="text"
+      name="name"
+      placeholder="Digite o nome completo"
+      value="{{ user.name }}">
+    </div>
+  </div>
+
+  <div class="item user-item">
+    <p>Email</p>
+    <div>
+      <input 
+        type="email"
+        name="email"
+        placeholder="Digite o email"
+        value="{{ user.email }}"
+        onblur="Validate.apply(this, 'isEmail')"
+      >
+    </div>
+  </div>
+
+  <div class="user-item">
+    <div class="user-checkbox">
+      {% if user.is_admin == true %}
+        <input type="checkbox" name="is_admin" checked>
+        <p>Administrador</p>
+      {%else%}
+        <input type="checkbox" name="is_admin">
+        <p>Administrador</p>
+      {%endif%}
+    </div>
+  </div>
+</div>
