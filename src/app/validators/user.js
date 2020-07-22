@@ -22,13 +22,6 @@ async function post(req, res, next) {
       error: 'Usuário já cadastrado!'
     })
 
-    // treatment of is_admin to post
-    if(!is_admin) {
-      result = {...req.body, is_admin:false}
-    } else {
-      result = {...req.body, is_admin:true}
-    }
-
     next()
 }
 
