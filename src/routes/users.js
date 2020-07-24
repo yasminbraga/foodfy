@@ -14,8 +14,9 @@ const UserValidator = require('../app/validators/user')
 // admin users management
 // routes.get('/admin/users', UserController.list)
 routes.get('/register', UserController.registerForm)
+routes.get('/', UserValidator.show, UserController.show)
 routes.post('/', UserValidator.post, UserController.post)
-// routes.put('/admin/users', UserController.put)
+routes.put('/', UserValidator.update, UserController.update)
 // routes.delete('/admn/users', UserController.delete)
 
 

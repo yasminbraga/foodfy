@@ -1,0 +1,38 @@
+{% extends "../layout.njk" %}
+
+{% block content %}
+<section class="form">
+  <form method="POST" action="/admin/users?_method=PUT" id="form-edit">
+    <div class="form-header">
+      <p>Atualizar Usuário</p>
+      <div class="form-buttons">
+        <button class="delete-button" type="submit" form="form-delete">Deletar</button>
+        <button class="button save" type="submit" form="form-edit">Salvar</button>
+      </div>
+    </div>
+      {% include "users/fields.njk" %}
+      <input 
+        type="hidden"
+        name="id"
+        value={{user.id}}
+      >
+  </form>
+  <form method="POST" action="/admin/users?_method=DELETE" id="form-delete">
+    <input 
+      type="hidden"
+      name="id"
+      value={{user.id}}
+    >
+  </form>
+</section>
+
+<script>
+  const formDelete = document.querySelector("#form-delete")
+  formDelete.addEventListener("submit", function(event) {
+    const confirmation = confirm("Tem certeza que deseja excluir esse usuário?")
+    if (!confirmation) {
+    event.preventDefault()
+    }
+  })
+</script>
+{% endblock %}
