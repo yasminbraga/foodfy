@@ -8,7 +8,7 @@ module.exports = {
     try {
       req.session.userId = req.user.id
 
-      return res.send("ok")
+      return res.redirect('/admin/users/profile')
       
     } catch (error) {
       console.error(error)
@@ -17,6 +17,9 @@ module.exports = {
         error: "Erro inesperado, tente novamente!"
       })
     }
-
+  },
+  logout(req, res) {
+    req.session.destroy()
+    return res.redirect("/user/login")
   }
 }

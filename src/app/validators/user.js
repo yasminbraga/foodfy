@@ -14,6 +14,19 @@ function checkAllFields(body) {
   }
 }
 
+async function index(req, res, next) {
+  const {userId: id} = req.session
+
+  const user = await User.findOne({ where: {id}})
+
+  if(!user) return res.render('users/register', {
+    error: "Usuário não encontrado!"
+  })
+
+  req.user = user
+  next()
+}
+
 async function show(req, res, next) {
   const {userId: id} = req.session
 
@@ -65,6 +78,7 @@ async function update(req, res, next) {
 }
 
 module.exports = {
+  index,
   post,
   show,
   update

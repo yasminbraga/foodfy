@@ -7,8 +7,8 @@ const ProfileController = require('../app/controllers/ProfileController')
 
 const UserValidator = require('../app/validators/user')
 
-// admin 
-// routes.get('/admin/profile', ProfileController.index)
+// user profile (admin e user) 
+routes.get('/profile', UserValidator.index, ProfileController.index)
 // routes.put('/admin/profile', ProfileController.put)
 
 // admin users management
