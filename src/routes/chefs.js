@@ -5,7 +5,8 @@ const routes = express.Router()
 
 const ChefController = require('../app/controllers/ChefController')
 
-routes.get('/create', ChefController.create)
+//onlyAdmin
+routes.get('/create', ChefController.create) 
 routes.get('/', ChefController.index)
 routes.get('/:id', ChefController.showChef)
 routes.get('/:id/edit', ChefController.edit)

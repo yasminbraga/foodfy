@@ -18,6 +18,12 @@ module.exports = {
     const results = await db.query(query)
     return results.rows[0]
   },
+  async all() {
+    const query = "SELECT * FROM users"
+
+    const results = await db.query(query)
+    return results.rows
+  },
   async create(data) {
     try {
       const query = `

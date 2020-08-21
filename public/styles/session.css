@@ -5,6 +5,7 @@ header.session-navigation {
   padding: 35px;
 }
 
+section.password.form,
 section.login.form {
   width: 500px;
   padding: 150px 0;
@@ -26,4 +27,11 @@ section.login.form {
   text-decoration: none;
   font-size: 16px;
   color: #969696;
+}
+
+.reset-footer,
+.forgot-password-footer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 35px;
 }

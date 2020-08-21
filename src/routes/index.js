@@ -15,9 +15,9 @@ routes.use('/admin/users', adminUsers)
 const sessionUsers = require('./session')
 routes.use('/users', sessionUsers)
 
-// routes.get('/', SiteController.index)
-// routes.get('/about', SiteController.about)
-// routes.get('/recipes', SiteController.showRecipes)
-// routes.get('/chefs', SiteController.showChefs)
+routes.get('/', SiteController.index)
+routes.get('/about', SiteController.about)
+routes.get('/recipes', SiteController.showRecipes)
+routes.get('/chefs', SiteController.showChefs)
 
 module.exports = routes

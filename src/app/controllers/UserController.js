@@ -2,6 +2,7 @@ const User = require('../models/User')
 
 const crypto = require('crypto')
 const mailer = require('../../lib/mailer')
+const user = require('../validators/user')
 
 module.exports = {
   registerForm(req, res) {
@@ -80,5 +81,9 @@ module.exports = {
         error: "Algum erro aconteceu!"
       })
     }
+  },
+  async list(req, res) {
+    const users = await User.all()
+    return res.render('users/list', {users})
   }
 }

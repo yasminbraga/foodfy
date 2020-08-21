@@ -31,3 +31,26 @@
   color: white;
   border-radius: 4px;
 }
+
+/* list users */
+.users-list .page-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 64px;
+}
+
+.users-list .cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-row-gap: 50px;
+}
+
+.users-list .card .name {
+  font-size: 18px;
+}
+
+.users-list .card .email {
+  font-size: 14px;
+  color: #777777;
+}

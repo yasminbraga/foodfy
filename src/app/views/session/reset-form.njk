@@ -1,0 +1,22 @@
+{% extends './layout.njk' %}
+
+{% block content %}
+<section class="login form">
+  <form action="/users/password-reset" method="POST">
+    <div class="login-header">
+      <h2>Iniciar Sessão</h2>
+    </div>
+
+    <div class="fields">
+      {% include 'session/reset-fields.njk' %}
+    </div>
+
+    <div class="reset-footer">
+      <button class="button save" type="submit">Acessar</button>
+    </div>
+
+  </form>
+</section>
+
+
+{% endblock %}

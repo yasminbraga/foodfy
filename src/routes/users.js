@@ -6,18 +6,19 @@ const UserController = require('../app/controllers/UserController')
 const ProfileController = require('../app/controllers/ProfileController')
 
 const UserValidator = require('../app/validators/user')
+const { onlyUsers, onlyAdminUsers } = require('../app/middlewares/sessionUser')
 
 // user profile (admin e user) 
-routes.get('/profile', UserValidator.index, ProfileController.index)
-// routes.put('/admin/profile', ProfileController.put)
+routes.get('/profile', onlyUsers, UserValidator.index, ProfileController.index) // onlyUser
+routes.put('/profile', onlyUsers, UserValidator.update, ProfileController.update) //onlyUser
 
 // admin users management
-// routes.get('/admin/users', UserController.list)
-routes.get('/register', UserController.registerForm)
-routes.get('/', UserValidator.show, UserController.show)
-routes.post('/', UserValidator.post, UserController.post)
-routes.put('/', UserValidator.update, UserController.update)
-// routes.delete('/admn/users', UserController.delete)
+routes.get('/list', onlyAdminUsers, UserController.list) //onlyAdmin
+routes.get('/register', onlyAdminUsers, UserController.registerForm) // onlyAdmin
+routes.get('/', onlyAdminUsers, UserValidator.show, UserController.show) //onlyAdmin
+routes.post('/', onlyAdminUsers, UserValidator.post, UserController.post) //onlyAdmin
+routes.put('/', onlyAdminUsers, UserValidator.update, UserController.update) //onlyAdmin
+// routes.delete('/admn/users', UserController.delete) //onlyAdmin
 
 
 module.exports = routes

@@ -2,11 +2,11 @@
 
 {% block content %}
 <section class="form">
-  <form method="POST" action="/admin/users?_method=PUT" id="form-edit">
+  <form method="POST" action="/admin/users/profile?_method=PUT" id="form-edit">
     <div class="form-header">
       <p>Bem vindo, {{user.name}}</p>
       <div class="form-buttons">
-        <button class="delete-button" type="submit" form="form-delete">Deletar</button>
+        <button class="button save" type="submit" form="form-edit">Salvar</button>
       </div>
     </div>
       {% include "users/profile-fields.njk" %}
