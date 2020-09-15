@@ -15,11 +15,11 @@ module.exports = {
       return res.redirect('/admin/users/profile')
       
     } catch (error) {
-      console.error(error)
-      return res.render('session/login', {
-        user: req.body,
-        error: "Erro inesperado, tente novamente!"
-      })
+        console.error(error)
+        return res.render('session/login', {
+          user: req.body,
+          error: "Erro inesperado, tente novamente!"
+        })
     }
   },
   logout(req, res) {

@@ -25,6 +25,7 @@
 }
 
 /* validate errors */
+
 .item .error {
   background-color: #DC4747;
   padding: 4px;
@@ -53,4 +54,23 @@
 .users-list .card .email {
   font-size: 14px;
   color: #777777;
+  margin: 4px 0 16px;
+}
+
+.card-links a {
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.card-links a + a {
+  margin-left: 16px;
+}
+
+.card-links .link-edit {
+  color: #6558C3;
+}
+
+.card-links .link-delete {
+  color: #F55A5A;
 }
