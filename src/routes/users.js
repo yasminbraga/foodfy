@@ -13,9 +13,9 @@ routes.get('/profile', onlyUsers, UserValidator.index, ProfileController.index) 
 routes.put('/profile', onlyUsers, UserValidator.update, ProfileController.update) //onlyUser
 
 // admin users management
+routes.get('/', onlyAdminUsers, UserValidator.show, UserController.show) //onlyAdmin
 routes.get('/list', onlyAdminUsers, UserController.list) //onlyAdmin
 routes.get('/register', onlyAdminUsers, UserController.registerForm) // onlyAdmin
-routes.get('/', onlyAdminUsers, UserValidator.show, UserController.show) //onlyAdmin
 routes.post('/', onlyAdminUsers, UserValidator.post, UserController.post) //onlyAdmin
 routes.put('/', onlyAdminUsers, UserValidator.update, UserController.update) //onlyAdmin
 // routes.delete('/admn/users', UserController.delete) //onlyAdmin

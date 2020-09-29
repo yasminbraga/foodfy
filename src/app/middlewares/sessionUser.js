@@ -7,6 +7,7 @@ function onlyUsers(req, res, next) {
 
 function onlyAdminUsers(req, res, next) {
   if (!req.session.userId || !req.session.is_admin) {
+    // render com error message
     return res.redirect('/admin/users/profile')
   }
   next()

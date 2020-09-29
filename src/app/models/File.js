@@ -1,23 +1,27 @@
 const db = require("../../config/db")
 const fs = require('fs')
 
+
+const Base = require('./Base')
+Base.init({ table: 'files'})
+
 module.exports = {
-  create({filename, path}) {
+  ...Base,
+  // create({filename, path}) {
+  //   const query = `
+  //     INSERT INTO files (
+  //       name,
+  //       path
+  //     ) VALUES ($1, $2)
+  //     RETURNING id
+  //   `
+  //   const values = [
+  //     filename,
+  //     path
+  //   ]
 
-    const query = `
-      INSERT INTO files (
-        name,
-        path
-      ) VALUES ($1, $2)
-      RETURNING id
-    `
-    const values = [
-      filename,
-      path
-    ]
-
-    return db.query(query, values)
-  },
+  //   return db.query(query, values)
+  // },
   insertId({fileId, recipeId}) {
     const query = `
       INSERT INTO recipe_files (
@@ -34,30 +38,23 @@ module.exports = {
     return db.query(query, values)
 
   },
-  files(id) {
-    return db.query(`
-      SELECT files.* FROM files
-      LEFT JOIN recipe_files ON files.id = recipe_files.file_id 
-      WHERE recipe_id = $1
-    `, [id])
-  },
-  deleteFile(id) {
-    return db.query(`
-      DELETE FROM files WHERE id = $1
-    `, [id])
-  },
-  findChefAvatar(fileId) {
-    return db.query(`
-      SELECT * FROM files WHERE id = $1
-    `, [fileId])
-  },
-  chefFiles(chefId) {
-    return db.query(`
-      SELECT files.* FROM files
-      LEFT JOIN chefs ON files.id = chefs.file_id
-      WHERE chefs.id = $1
-    `,[chefId])
-  },
+  // deleteFile(id) {
+  //   return db.query(`
+  //     DELETE FROM files WHERE id = $1
+  //   `, [id])
+  // },
+  // findChefAvatar(fileId) {
+  //   return db.query(`
+  //     SELECT * FROM files WHERE id = $1
+  //   `, [fileId])
+  // },
+  // chefFiles(chefId) {
+  //   return db.query(`
+  //     SELECT files.* FROM files
+  //     LEFT JOIN chefs ON files.id = chefs.file_id
+  //     WHERE chefs.id = $1
+  //   `,[chefId])
+  // },
 
 
 }

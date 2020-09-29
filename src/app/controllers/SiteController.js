@@ -4,45 +4,51 @@ const File = require("../models/File")
 
 module.exports = {
   async index(req, res) {
-    let results = await Recipe.all()
-    
-    async function getImage(recipeId) {
-      let results = await File.files(recipeId)
-      const recipeFiles = results.rows.map(recipeFile => `${req.protocol}://${req.headers.host}${recipeFile.path.replace("public", "")}`)
+    try {
+      // let results = await Recipe.all()
+      let recipes = await Recipe.findAll()
+      
+      async function getImage(recipeId) {
+        let recipeFiles = await Recipe.files(recipeId)
+        recipeFiles = recipeFiles.map(recipeFile => `${req.protocol}://${req.headers.host}${recipeFile.path.replace("public", "")}`)
 
-      return recipeFiles[0]
+        return recipeFiles[0]
+      }
+
+      const recipesPromise = recipes.map(async recipe => {
+        recipe.img = await getImage(recipe.id)
+        // pegar o nome do chefe
+        return recipe
+      })
+
+      recipes = await Promise.all(recipesPromise)
+
+      return res.render('site/index', {recipes})
+
+    } catch (error) {
+      console.error(error)
     }
-
-    const recipesPromise = results.rows.map(async recipe => {
-      recipe.img = await getImage(recipe.id)
-      return recipe
-    })
-
-    const recipes = await Promise.all(recipesPromise)
-
-    return res.render('site/index', {recipes})
+    
   },
-  
   about(req, res) {
     return res.render('site/about')
   },
-
   async showRecipes(req, res) {
-    let results = await Recipe.all()
+    let recipes = await Recipe.findAll()
     
     async function getImage(recipeId) {
-      let results = await File.files(recipeId)
-      const recipeFiles = results.rows.map(recipeFile => `${req.protocol}://${req.headers.host}${recipeFile.path.replace("public", "")}`)
+      let recipeFiles = await Recipe.files(recipeId)
+      recipeFiles = recipeFiles.map(recipeFile => `${req.protocol}://${req.headers.host}${recipeFile.path.replace("public", "")}`)
 
       return recipeFiles[0]
     }
 
-    const recipesPromise = results.rows.map(async recipe => {
+    const recipesPromise = recipes.map(async recipe => {
       recipe.img = await getImage(recipe.id)
       return recipe
     }).filter((recipe, index) => index > 3 ? false : true)
 
-    const recipes = await Promise.all(recipesPromise)
+    recipes = await Promise.all(recipesPromise)
 
     return res.render('site/recipes', {recipes})
   },

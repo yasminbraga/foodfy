@@ -5,7 +5,7 @@ const Recipe = require('../models/Recipe')
 module.exports = {
   async index(req, res) {
 
-    let results = await Recipe.all()
+    let results = await Recipe.findAll()
     
     async function getImage(recipeId) {
       let results = await File.files(recipeId)
@@ -23,17 +23,15 @@ module.exports = {
 
     return res.render('recipes/index', {recipes})
   },
-  create(req, res) {
+  async create(req, res) {
+    try {
+      const chefs = await Chef.findAll()
 
-    // Pegar os chefes
-    Chef.all()
-      .then(function(results) {
-        const chefs = results.rows
+      return res.render('recipes/create', { chefs })
 
-        return res.render('recipes/create', { chefs })
-      }).catch(function(err) {
-        throw new Error(err)
-      })
+    } catch (error) {
+      console.error(error)
+    }
   },
 
   async showRecipe(req, res) {
@@ -58,24 +56,40 @@ module.exports = {
   },
 
   async post(req, res) {
-    const keys = Object.keys(req.body)
-    for (key of keys) {
-      if (req.body[key] == "") return res.send('Please, fill all fields!')
+    try {
+      const keys = Object.keys(req.body)
+      for (key of keys) {
+        if (req.body[key] == "") return res.send('Please, fill all fields!')
+      }
+
+      if (req.files.length == 0) return res.send('Please, send at least one image')
+
+      let {
+        title,
+        ingredients,
+        preparation,
+        information,
+      } = req.body
+
+      let recipeId = await Recipe.create({
+        title,
+        ingredients,
+        preparation,
+        information,
+        user_id: req.session.userId
+      })
+
+      const filesPromise = req.files.map(file => File.create(file))
+      let fileResults = await Promise.all(filesPromise)
+
+      const idPromise = fileResults.map(file => File.insertId({fileId: file.rows[0].id, recipeId}))
+      const fileIdResults = await Promise.all(idPromise)
+
+      return res.send('ok')
+
+    } catch (error) {
+      console.error(error);
     }
-
-    if (req.files.length == 0) return res.send('Please, send at least one image')
-
-    let results = await Recipe.create(req.body)
-    const recipeId = results.rows[0].id
-
-    const filesPromise = req.files.map(file => File.create(file))
-    let fileResults = await Promise.all(filesPromise)
-
-    const idPromise = fileResults.map(file => File.insertId({fileId: file.rows[0].id, recipeId}))
-    const fileIdResults = await Promise.all(idPromise)
-
-    return res.send('ok')
-
   },
 
   async edit(req, res) {
