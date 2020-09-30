@@ -5,35 +5,35 @@ const Recipe = require('../models/Recipe')
 module.exports = {
   async index(req, res) {
 
-    let results = await Recipe.findAll()
+    let recipes = await Recipe.findAll()
     
     async function getImage(recipeId) {
-      let results = await File.files(recipeId)
-      const recipeFiles = results.rows.map(recipeFile => `${req.protocol}://${req.headers.host}${recipeFile.path.replace("public", "")}`)
+      let files = await Recipe.files(recipeId)
+      files = files.map(recipeFile => `${req.protocol}://${req.headers.host}${recipeFile.path.replace("public", "")}`)
 
       return recipeFiles[0]
     }
 
-    const recipesPromise = results.rows.map(async recipe => {
+    const recipesPromise = recipes.map(async recipe => {
       recipe.img = await getImage(recipe.id)
       return recipe
     })
 
-    const recipes = await Promise.all(recipesPromise)
+    recipes = await Promise.all(recipesPromise)
 
     return res.render('recipes/index', {recipes})
   },
   async create(req, res) {
     try {
-      const chefs = await Chef.findAll()
+      // aqui pegar todos os users
+      // const chefs = await Chef.findAll()
 
-      return res.render('recipes/create', { chefs })
+      return res.render('recipes/create')
 
     } catch (error) {
       console.error(error)
     }
   },
-
   async showRecipe(req, res) {
     let results = await Recipe.find(req.params.id)
     const recipe = results.rows[0]
@@ -54,7 +54,6 @@ module.exports = {
     return res.render('recipes/showRecipe', {recipe, chef, recipeFiles})
     
   },
-
   async post(req, res) {
     try {
       const keys = Object.keys(req.body)
@@ -85,7 +84,7 @@ module.exports = {
       const idPromise = fileResults.map(file => File.insertId({fileId: file.rows[0].id, recipeId}))
       const fileIdResults = await Promise.all(idPromise)
 
-      return res.send('ok')
+      return res.redirect(`admin/recipes/${recipeId}`)
 
     } catch (error) {
       console.error(error);
