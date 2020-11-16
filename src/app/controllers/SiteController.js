@@ -1,5 +1,5 @@
 const Recipe = require("../models/Recipe")
-const Chef = require("../models/Chef")
+const User = require("../models/User")
 const File = require("../models/File")
 
 module.exports = {
@@ -9,15 +9,15 @@ module.exports = {
       let recipes = await Recipe.findAll()
       
       async function getImage(recipeId) {
-        let recipeFiles = await Recipe.files(recipeId)
-        recipeFiles = recipeFiles.map(recipeFile => `${req.protocol}://${req.headers.host}${recipeFile.path.replace("public", "")}`)
-
-        return recipeFiles[0]
+        let files = await Recipe.files(recipeId)
+        files = files.map(recipeFile => `${req.protocol}://${req.headers.host}${recipeFile.path.replace("public", "")}`)
+  
+        return files[0]
       }
 
       const recipesPromise = recipes.map(async recipe => {
         recipe.img = await getImage(recipe.id)
-        // pegar o nome do chefe
+        recipe.chef = await User.find(recipe.user_id)
         return recipe
       })
 
@@ -45,10 +45,12 @@ module.exports = {
 
     const recipesPromise = recipes.map(async recipe => {
       recipe.img = await getImage(recipe.id)
+      recipe.chef = await User.find(recipe.user_id)
       return recipe
     }).filter((recipe, index) => index > 3 ? false : true)
 
     recipes = await Promise.all(recipesPromise)
+    console.log(recipes)
 
     return res.render('site/recipes', {recipes})
   },

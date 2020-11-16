@@ -2,13 +2,11 @@ const User = require('../models/User')
 const Recipe = require('../models/Recipe')
 
 const mailer = require('../../lib/mailer')
-
 const crypto = require('crypto')
 const user = require('../validators/user')
 
 const { hash } = require('bcryptjs')
 const { unlinkSync } = require('fs')
-
 
 module.exports = {
   // admin

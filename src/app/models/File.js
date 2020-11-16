@@ -22,7 +22,8 @@ module.exports = {
 
   //   return db.query(query, values)
   // },
-  insertId({fileId, recipeId}) {
+  insertId({file_id, recipe_id}) {
+
     const query = `
       INSERT INTO recipe_files (
         file_id,
@@ -32,8 +33,8 @@ module.exports = {
     `
 
     values = [
-      fileId,
-      recipeId
+      file_id,
+      recipe_id
     ]
     return db.query(query, values)
 
