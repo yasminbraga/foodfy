@@ -9,20 +9,20 @@
 
    <div class="gallery">
     <div class="highlight">
-      {% if not recipeFiles %}
+      {% if not recipe.img %}
         <img src="http://placehold.it/500x500?text=PRODUTO SEM FOTO">
       {% else %}
         <img 
-          src="{{recipeFiles[0].src}}" 
-          alt="{{recipeFiles[0].name}}"
+          src="{{recipe.img}}" 
+          alt="Imagem de: {{recipe.title}}"
           onclick="Lightbox.open()"
         >
       {% endif %}
 
       <div class="lightbox-target">
         <img 
-          src="{{recipeFiles[0].src}}"
-          alt="{{recipeFiles[0].name}}"
+          src="{{recipe.img}}"
+          alt="Imagem de: {{recipe.title}}"
         >
         <a 
           href="#"
@@ -36,10 +36,10 @@
 
     </div>
     <div class="gallery-preview">
-      {% for file in recipeFiles %}
+      {% for file in recipe.files %}
         <img 
           src="{{file.src}}" 
-          alt="{{image.name}}"
+          alt="{{file.name}}"
           {% if loop.index0 == 0 %}
             class='active'
           {%endif%}
@@ -52,7 +52,7 @@
   <div class="recipe-info-content">
     <div class="recipe-content-title">
       <h1>{{ recipe.title }}</h1>
-      <p>por {{ chef.name }}</p>
+      <p>por {{ recipe.chef.name }}</p>
     </div>
     <div class="recipe-content">
       <h2>Ingredientes</h2>

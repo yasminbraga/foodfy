@@ -5,6 +5,7 @@
 <div class="page-content">
   <div class="recipes-page-title">
     <h2>Gerenciar receitas</h2>
+    {# <a class="button save" href="/admin/recipes/create">Novo</a> #}
   </div>
   <div class="recipes-cards">
       {% for recipe in recipes %}
@@ -16,7 +17,7 @@
           </div>
           <div class="recipe-card-content">
             <p class="recipe-card-title">{{ recipe.title }}</p>
-            <p class="recipes-page-chef">por {{ recipe.chef_name }}</p>
+            <p class="recipes-page-chef">por {{ recipe.chef.name }}</p>
             <a href="/admin/recipes/{{ recipe.id }}">Visualizar</a>
           </div>
         </div>

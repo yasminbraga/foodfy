@@ -6,10 +6,10 @@
     <div class="chefs-cards">
         {% for chef in chefs %}
           <div class="chef-card">
-              <img src="{{ chef.img }}" alt="Imagem de {{ chef.name }}">
+              <img src="{{ chef.avatar.src }}" alt="Imagem de {{ chef.name }}">
               <div class="site-chef-content">
                 <p class="chef-name">{{ chef.name }}</p>
-                <p class="chef-total-recipes">{{chef.total_recipes}} receitas</p>
+                <p class="chef-total-recipes">{{chef.totalRecipes}} receitas</p>
               </div>
           </div>
         {% endfor %}

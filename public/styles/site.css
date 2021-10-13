@@ -111,16 +111,74 @@ section.site-cards .site-card img {
 }
 
 /* SITE - CHEFS PAGE */
+.chefs-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr ;
+}
+
 .site-chef-content {
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
+
 .site-chef-content .chef-name {
   font-size: 18px;
   margin-bottom: 5px;
 }
+
 .site-chef-content .chef-total-recipes {
   font-size: 14px;
   color: #666666;
+}
+
+/* MODAL */
+.modal-overlay {
+  background-color: rgba(0, 0, 0, 0.6);
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  display: flex;
+  align-items: center;
+  opacity: 0;
+  visibility: hidden;
+}
+.modal-content {
+  background-color: white;
+  width: 660px;
+  height: 413px;
+  border-radius: 16px;
+  margin: 0 auto;
+}
+
+.modal-content img {
+  width: 600px;
+  height: 200px;
+  border-radius: 15px;
+  margin: 30px 30px 20px;
+  object-fit: cover;
+}
+.modal-title {
+  font-size: 24px;
+  text-align: center;
+  margin-bottom: 5px;
+}
+.modal-author {
+  color: #777777;
+  font-size: 18px;
+  text-align: center;
+  margin-bottom: 60px;
+}
+.close-modal {
+  font-size: 16px;
+  text-decoration: none;
+  color: #999999;
+  margin: 0 281px 30px;
+}
+
+/* MODAL ACTIVE */
+.modal-overlay.active {
+  opacity: 1;
+  visibility: visible;
 }

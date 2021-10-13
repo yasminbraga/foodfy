@@ -2,6 +2,7 @@ const express = require('express')
 const routes = express.Router()
 
 const SiteController = require('../app/controllers/SiteController')
+const SearchController = require('../app/controllers/SearchController')
 
 const recipes = require('./recipes')
 routes.use('/admin/recipes', recipes)
@@ -19,5 +20,8 @@ routes.get('/', SiteController.index)
 routes.get('/about', SiteController.about)
 routes.get('/recipes', SiteController.showRecipes)
 routes.get('/chefs', SiteController.showChefs)
+
+// SEARCH
+routes.get('/recipes/search', SearchController.index)
 
 module.exports = routes

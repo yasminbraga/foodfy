@@ -2,34 +2,23 @@ const User = require('../models/User')
 const File = require('../models/File')
 const Recipe = require('../models/Recipe')
 
+const LoadRecipesService = require('../services/LoadRecipesService')
 
 module.exports = {
   async index(req, res) {
+    try {
+      const allRecipes = await LoadRecipesService.load('recipes')
+      const recipes = allRecipes.filter((recipe, index) => index > 5 ? false : true)      
 
-    let recipes = await Recipe.findAll()
-    
-    async function getImage(recipeId) {
-      let files = await Recipe.files(recipeId)
-      files = files.map(recipeFile => `${req.protocol}://${req.headers.host}${recipeFile.path.replace("public", "")}`)
+      return res.render('recipes/index', {recipes})
 
-      return recipeFiles[0]
+    } catch (error) {
+      console.error(error)
     }
-
-    const recipesPromise = recipes.map(async recipe => {
-      recipe.img = await getImage(recipe.id)
-      recipe.chef_name = await User.findOne(recipe.user_id)
-      return recipe
-    })
-
-    recipes = await Promise.all(recipesPromise)
-    console.log(recipes)
-
-    return res.render('recipes/index', {recipes})
   },
   async create(req, res) {
     try {
-      // aqui pegar todos os users
-      // const chefs = await Chef.findAll()
+      const chefs = await Chef.findAll()
 
       return res.render('recipes/create')
 
@@ -39,32 +28,13 @@ module.exports = {
   },
   async showRecipe(req, res) {
     try {
-      let recipe = await Recipe.find(req.params.id)
+      let recipe = await LoadRecipesService.load('recipe', req.params.id)
 
-      recipe = {
-        ...recipe, 
-        ingredients: Array.from(recipe.ingredients.split(",")),
-        preparation: Array.from(recipe.preparation.split(","))
-      }
+      return res.render('recipes/showRecipe', {recipe})
 
-      if (!recipe) return res.send("Recipe Not Found!")
-
-      // results = await Chef.findChef(recipe.chef_id)
-      // const chef = results.rows[0]
-
-      let files = await Recipe.files(recipe.id)
-
-      let recipeFiles = files.map(recipeFile => ({
-        ...recipeFile,
-        src: `${req.protocol}://${req.headers.host}${recipeFile.path.replace("public", "")}`
-      }))
-
-      return res.render('recipes/showRecipe', {recipe, recipeFiles})
-
-  } catch (error) {
-    console.error(error)   
-  }
-    
+    } catch (error) {
+      console.error(error)   
+    }
   },
   async post(req, res) {
     try {

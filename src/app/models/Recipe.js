@@ -15,7 +15,7 @@ module.exports = {
 
     return results.rows
   },
-  search(params) {
+  async search(params) {
     const {filter} = params
 
     let query = "",
@@ -23,25 +23,13 @@ module.exports = {
           WHERE recipes.title ilike '%${filter}%'
         `
     query = `
-      SELECT recipes.*, chefs.name AS chef_name
+      SELECT recipes.*, users.name AS chef_name
       FROM recipes
-      LEFT JOIN chefs ON (recipes.chef_id = chefs.id)
+      LEFT JOIN users ON (recipes.user_id = users.id)
       ${filterQuery}
       ORDER BY recipes.created_at DESC
     `
-    return db.query(query)
-    
-    
+    const results = await db.query(query)
+    return results.rows
   }
 }
-
- // all() {
-  //   return db.query(
-  //     `
-  //     SELECT recipes.*, chefs.name AS chef_name
-  //     FROM recipes
-  //     LEFT JOIN chefs ON (recipes.chef_id = chefs.id)
-  //     ORDER BY recipes.created_at DESC
-  //     `
-  //   )
-  // },

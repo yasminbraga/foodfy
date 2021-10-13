@@ -1,64 +1,32 @@
 const Chef = require('../models/Chef')
 const File = require('../models/File')
 
+const LoadChefsService = require('../services/LoadChefsService')
+
 module.exports = {
   async index(req, res) {
-
-    let results = await Chef.all()
-
-    async function getAvatar(fileId) {
-      let results = await File.findChefAvatar(fileId)
-      let chefAvatar = results.rows[0]
-
-      chefAvatar = `${req.protocol}://${req.headers.host}${chefAvatar.path.replace("public", "")}`
-      
-      return chefAvatar
+    try {
+      const chefs = await LoadChefsService.load('chefs')
+      return res.render('chefs/index', {chefs}) 
+    } catch (error) {
+      console.error(error)
     }
-
-    const chefsAvatarPromise = results.rows.map(async chef => {
-      chef.img = await getAvatar(chef.file_id)
-      return chef
-    })
-
-    const chefs = await Promise.all(chefsAvatarPromise)
-    return res.render('chefs/index', {chefs})
   },
   create(req, res) {
-    return res.render('chefs/create')
+    try {
+      return res.render('chefs/create')
+    } catch (error) {
+      console.error(error)
+    }
   },
   async showChef(req, res) {
-
-    let results = await Chef.findChef(req.params.id)
-    const chef = results.rows[0]
-
-    if (!chef) return res.send('Chef not found!')
-
-    results = await File.findChefAvatar(chef.file_id)
-    let chefAvatar = results.rows[0]
-
-    chefAvatar = {
-      ...chefAvatar,
-      src: `${req.protocol}://${req.headers.host}${chefAvatar.path.replace("public", "")}`
+    try {
+      const chef = await LoadChefsService.load('chef', req.params.id)
+      console.log(chef)
+      return res.render('chefs/showChef', {chef})
+    } catch (error) {
+      console.error(error)
     }
-
-    // pegar as receitas do chefe
-    results = await Chef.findChefRecipes(chef.id)
-    let recipes = results.rows
-
-    async function getImage(recipeId) {
-      let results = await File.files(recipeId)
-      const recipeFiles = results.rows.map(recipeFile => `${req.protocol}://${req.headers.host}${recipeFile.path.replace("public", "")}`)
-      return recipeFiles[0]
-    }
-
-    const recipesPromise = recipes.map(async recipe => {
-      recipe.img = await getImage(recipe.id)
-      return recipe
-    })
-
-    recipes = await Promise.all(recipesPromise)
-
-    return res.render('chefs/showChef', {chef, chefAvatar, recipes})
   },
   async post(req, res) {
     const keys = Object.keys(req.body)

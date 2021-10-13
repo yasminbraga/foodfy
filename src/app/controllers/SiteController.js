@@ -1,77 +1,49 @@
-const Recipe = require("../models/Recipe")
-const User = require("../models/User")
-const File = require("../models/File")
+const Recipe = require("../models/Recipe");
+const Chef = require("../models/Chef");
+const File = require("../models/File");
+
+const LoadRecipesService = require("../services/LoadRecipesService");
+const LoadChefsService = require("../services/LoadChefsService");
 
 module.exports = {
   async index(req, res) {
     try {
-      // let results = await Recipe.all()
-      let recipes = await Recipe.findAll()
-      
-      async function getImage(recipeId) {
-        let files = await Recipe.files(recipeId)
-        files = files.map(recipeFile => `${req.protocol}://${req.headers.host}${recipeFile.path.replace("public", "")}`)
-  
-        return files[0]
-      }
+      const allRecipes = await LoadRecipesService.load("recipes");
 
-      const recipesPromise = recipes.map(async recipe => {
-        recipe.img = await getImage(recipe.id)
-        recipe.chef = await User.find(recipe.user_id)
-        return recipe
-      })
+      const recipes = allRecipes.filter((recipe, index) =>
+        index > 5 ? false : true
+      );
 
-      recipes = await Promise.all(recipesPromise)
-
-      return res.render('site/index', {recipes})
-
+      console.log("recipes");
+      return res.render("site/index", { recipes });
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
-    
+    // return res.render("site/index");
   },
   about(req, res) {
-    return res.render('site/about')
+    return res.render("site/about");
   },
   async showRecipes(req, res) {
-    let recipes = await Recipe.findAll()
-    
-    async function getImage(recipeId) {
-      let recipeFiles = await Recipe.files(recipeId)
-      recipeFiles = recipeFiles.map(recipeFile => `${req.protocol}://${req.headers.host}${recipeFile.path.replace("public", "")}`)
+    try {
+      const allRecipes = await LoadRecipesService.load("recipes");
+      const recipes = allRecipes.filter((recipe, index) =>
+        index > 10 ? false : true
+      );
 
-      return recipeFiles[0]
+      return res.render("site/recipes", { recipes });
+    } catch (error) {
+      console.error(error);
     }
-
-    const recipesPromise = recipes.map(async recipe => {
-      recipe.img = await getImage(recipe.id)
-      recipe.chef = await User.find(recipe.user_id)
-      return recipe
-    }).filter((recipe, index) => index > 3 ? false : true)
-
-    recipes = await Promise.all(recipesPromise)
-    console.log(recipes)
-
-    return res.render('site/recipes', {recipes})
   },
   async showChefs(req, res) {
-    let results = await Chef.all()
-
-    async function getAvatar(fileId) {
-      let results = await File.findChefAvatar(fileId)
-      let chefAvatar = results.rows[0]
-
-      chefAvatar = `${req.protocol}://${req.headers.host}${chefAvatar.path.replace("public", "")}`
-      
-      return chefAvatar
+    try {
+      const chefs = await LoadChefsService.load("chefs");
+      console.log(chefs);
+      console.log("chegou aqyu");
+      return res.render("site/chefs");
+    } catch (error) {
+      console.error(error);
     }
-
-    const chefsAvatarPromise = results.rows.map(async chef => {
-      chef.img = await getAvatar(chef.file_id)
-      return chef
-    })
-
-    const chefs = await Promise.all(chefsAvatarPromise)
-    return res.render('site/chefs', {chefs})
-  }
-}
+  },
+};

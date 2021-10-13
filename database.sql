@@ -1,65 +1,49 @@
 DROP DATABASE IF EXISTS foodfydb;
 CREATE DATABASE foodfydb;
 
+CREATE TABLE "users" (
+  "id" SERIAL PRIMARY KEY,
+  "name" text NOT NULL,
+  "email" text UNIQUE NOT NULL,
+  "password" text NOT NULL,
+  "is_admin" boolean,
+  "reset_token" text,
+  "reset_token_expires" text,
+  "created_at" timestamp DEFAULT (now()),
+  "updated_at" timestamp DEFAULT (now())
+);
+
+CREATE TABLE "files" (
+  "id" SERIAL PRIMARY KEY,
+  "name" text NOT NULL,
+  "path" text NOT NULL
+);
+
+CREATE TABLE "chefs" (
+  "id" SERIAL PRIMARY KEY,
+  "name" text NOT NULL,
+  "file_id" int NOT NULL REFERENCES "files" (id),
+  "created_at" timestamp DEFAULT (now()),
+  "updated_at" timestamp DEFAULT (now())
+);
+
 CREATE TABLE "recipes" (
   "id" SERIAL PRIMARY KEY,
   "title" text,
   "ingredients" text[],
   "preparation" text[],
   "information" text,
-  "chef_id" int,
-  "user_id" int,
+  "chef_id" int NOT NULL REFERENCES "chefs" (id),
+  "user_id" int NOT NULL REFERENCES "users" (id) ON DELETE CASCADE,
   "created_at" timestamp DEFAULT (now()),
   "updated_at" timestamp DEFAULT (now())
-);
-
-CREATE TABLE "chefs" (
-  "id" SERIAL PRIMARY KEY,
-  "name" text,
-  "file_id" int,
-  "created_at" timestamp DEFAULT (now()),
-  "updated_at" timestamp DEFAULT (now())
-);
-
-ALTER TABLE "recipes" 
-ADD FOREIGN KEY ("chef_id") 
-REFERENCES "chefs" ("id");
-
-CREATE TABLE "users" (
-  "id" SERIAL PRIMARY KEY,
-  "name" text NOT NULL,
-  "email" text NOT NULL,
-  "password" text NOT NULL,
-  "is_admin" boolean,
-  "created_at" timestamp DEFAULT (now()),
-  "updated_at" timestamp DEFAULT (now())
-);
-
-ALTER TABLE "recipes" 
-ADD FOREIGN KEY ("user_id") 
-REFERENCES "users" ("id");
-
-CREATE TABLE "files" (
-  "id" SERIAL PRIMARY KEY,
-  "name" text,
-  "path" text
 );
 
 CREATE TABLE "recipe_files" (
   "id" SERIAL PRIMARY KEY,
-  "recipe_id" int,
-  "file_id" int
+  "recipe_id" int NOT NULL REFERENCES "recipes" (id) ON DELETE CASCADE,
+  "file_id" int REFERENCES "files" (id) ON DELETE CASCADE
 );
-
-ALTER TABLE "recipe_files" 
-ADD FOREIGN KEY ("file_id")
-REFERENCES "files" ("id")
-ON DELETE CASCADE;
-
-ALTER TABLE "recipe_files" 
-ADD FOREIGN KEY ("recipe_id")
-REFERENCES "recipes" ("id")
-ON DELETE CASCADE;
 
 -- create procedure
 CREATE FUNCTION trigger_set_timestamp()
@@ -83,10 +67,10 @@ FOR EACH ROW
 EXECUTE PROCEDURE trigger_set_timestamp();
 
 -- auto updated_at users
--- CREATE TRIGGER set_timestamp
--- BEFORE UPDATE ON users
--- FOR EACH ROW
--- EXECUTE PROCEDURE trigger_set_timestamp();
+CREATE TRIGGER set_timestamp
+BEFORE UPDATE ON users
+FOR EACH ROW
+EXECUTE PROCEDURE trigger_set_timestamp();
 
 CREATE TABLE "session" (
   "sid" varchar NOT NULL COLLATE "default",
@@ -98,6 +82,3 @@ WITH (OIDS=FALSE);
 ALTER TABLE "session" ADD CONSTRAINT "session_pkey" PRIMARY KEY ("sid") NOT DEFERRABLE INITIALLY IMMEDIATE;
 
 CREATE INDEX "IDX_session_expire" ON "session" ("expire");
-
-ALTER TABLE "users" ADD COLUMN reset_token text;
-ALTER TABLE "users" ADD COLUMN reset_token_expires text;

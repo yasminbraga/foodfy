@@ -4,12 +4,12 @@
   <div class="page-content">
     <div class="chefs-page-title">
       <h2>Gerenciar chefs</h2>
-      {# <a href="/admin/chefs/create">Novo chef</a> #}
+      {# <a class="button save" href="/admin/chefs/create">Novo</a> #}
     </div>
     <div class="chefs-cards">
         {% for chef in chefs %}
           <div class="chef-card">
-              <img src="{{ chef.img }}" alt="Imagem de {{ chef.name }}">
+              <img src="{{ chef.avatar.src }}" alt="Imagem de {{ chef.name }}">
               <div class="chef-card-content">
                 <p class="chef-name">{{ chef.name }}</p>
                 <a href="/admin/chefs/{{ chef.id }}">Visualizar</a>
